@@ -1,0 +1,23 @@
+{
+  "name": "redside",
+  "description": "NOAA River Level Data Wrapper",
+  "version": "0.0.1",
+  "author": "Timmy Crawford <timmydcrawford@gmail.com>",
+  "dependencies": {
+    "request": "2.14.x",
+    "xml2js": "0.2.x",
+    "moment": "2.x",
+    "lodash": "1.x",
+    "async": "*"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*",
+    "sinon": "*",
+    "eyes": "*"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "main": "redside.js"
+}
