@@ -9,23 +9,24 @@ var request = require('request'),
 var noaaEndpoint = 'http://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=';
 
 function Redside( options ) {
-	var options = options || {};
-
 	if ( ! ( this instanceof Redside ) ) {
 		return new Redside( options );
+	}
+	return this;
+}
+
+Redside.prototype.fetch = function( options ) {
+	if ( 'object' !== typeof( options ) ) {
+		throw new TypeError( 'options object is required' );
 	}
 	if ( 'string' !== typeof( options.station ) ) {
 		throw new TypeError( 'station is a required option' );
 	}
-	this.station = options.station;
-	this.data = [];
-	this.response = null;
-	return this;
-}
-
-Redside.prototype.fetch = function( cb ) {
-	var url = noaaEndpoint + this.station,
+	var station = options.station,
+		cb = options.callback,
+		url = noaaEndpoint + station,
 		_this = this;
+
 	async.waterfall([
 		function( callback ) {
 			request.get( url, function ( error, response, body ) {

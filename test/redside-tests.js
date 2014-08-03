@@ -7,15 +7,11 @@ var assert = require( 'chai' ).assert,
 	Redside = require( '../redside' );
 
 describe('Redside', function() {
-	var benham = new Redside( { station: 'beno3' } );
-
-	it( 'should require a station' , function( done ) {
-		assert.throws( Redside, 'station is a required option' );
-		done();
-	} );
+	var benham = new Redside(),
+		station = 'beno3';
 
 	it( 'should create an instance of redside', function( done ) {
-		assert.instanceOf( benham, Redside, 'benham is an instance of Redside' );
+		assert.instanceOf( new Redside(), Redside, 'benham is an instance of Redside' );
 		done();
 	} );
 
@@ -32,28 +28,33 @@ describe('Redside', function() {
 			done();
 		} );
 
+		it( 'should require options' , function( done ) {
+			assert.throws( benham.fetch, 'options object is required' );
+			done();
+		} );
+
 		it( 'should call the callback', function( done ) {
-			benham.fetch( function( response ) {
+			benham.fetch( { station: station, callback: function( response ) {
 				assert.ok( request.get.called );
 				done();
-			} );
+			} } );
 		} );
 
 		it( 'should return an array', function( done ) {
-			benham.fetch( function( response ) {
+			benham.fetch( { station: station, callback: function( response ) {
 				assert.isArray( response );
 				done();
-			} );
+			} } );
 		} );
 
 		it( 'should set proper object values', function( done ) {
-			benham.fetch( function( response ) {
+			benham.fetch( { station: station, callback: function( response ) {
 				var record = response[0];
 				assert.strictEqual( record.date, '2014-08-01T05:30:00-00:00' );
 				assert.strictEqual( record.stage, '5.12' );
 				assert.strictEqual( record.cfs, '1930.00' );
 				done();
-			} );
+			} } );
 		} );
 	} );
 
